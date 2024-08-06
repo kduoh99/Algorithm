@@ -18,9 +18,9 @@ public class Main {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		var br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		var st = new StringTokenizer(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 		
@@ -38,7 +38,7 @@ public class Main {
 		
 		int cnt = 0;
 		for (int i = 1; i <= N; i++) {
-			if (visited[i] == false) {
+			if (!visited[i]) {
 				dfs(i);
 				cnt++;
 			}

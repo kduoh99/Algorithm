@@ -1,17 +1,12 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
+        int singleBit = 0, doubleBit = 0;
         
         for (int num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            singleBit = (singleBit ^ num) & ~doubleBit;
+            doubleBit = (doubleBit ^ num) & ~singleBit;
         }
         
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (entry.getValue() == 1) {
-                return entry.getKey();
-            }
-        }
-        
-        return -1;
+        return singleBit;
     }
 }

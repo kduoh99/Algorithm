@@ -16,15 +16,13 @@ public class Main {
         for (int i = 0; i < N; i++) {
             arr[i] = Double.parseDouble(br.readLine());
         }
-
         Arrays.sort(arr);
+
         double sum = 0;
         for (int i = K; i < N - K; i++) {
             sum += arr[i];
         }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%.2f", sum / (N - (K * 2)))).append('\n');
+        double tAVG = sum / (N - K * 2);
 
         for (int i = 0; i < K; i++) {
             arr[i] = arr[K];
@@ -32,11 +30,15 @@ public class Main {
         }
 
         sum = 0;
-        for (int i = 0; i < N; i++) {
-            sum += arr[i];
+        for (double score : arr) {
+            sum += score;
         }
+        double aAVG = sum / N;
 
-        sb.append(String.format("%.2f", sum / N));
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%.2f", tAVG)).append('\n');
+        sb.append(String.format("%.2f", aAVG));
+
         System.out.println(sb);
         br.close();
     }

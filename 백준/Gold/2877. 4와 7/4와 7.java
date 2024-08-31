@@ -7,22 +7,16 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int K = Integer.parseInt(br.readLine());
-        int n = 0, digits = 0;
 
-        while (K > digits) {
-            n++;
-            digits += (int) Math.pow(2, n);
-        }
-
-        int offset = K - (digits - (int) Math.pow(2, n)) - 1;
+        K--;
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < n; i++) {
-            int bit = (offset >> (n - 1 - i)) & 1;
-            sb.append(bit == 0 ? '4' : '7');
+        while (K >= 0) {
+            sb.append(K % 2 == 0 ? '4' : '7');
+            K = (K / 2) - 1;
         }
 
-        System.out.println(sb);
+        System.out.println(sb.reverse());
         br.close();
     }
 }

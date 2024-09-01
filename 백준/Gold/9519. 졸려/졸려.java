@@ -9,48 +9,43 @@ public class Main {
         int X = Integer.parseInt(br.readLine());
         String word = br.readLine();
 
-        final int SIZE = word.length();
         StringBuilder sb = new StringBuilder(word);
-
-        String original = word;
+        final int SIZE = word.length();
         int cycleLength = 0;
 
-        do {
-            char[] result = new char[SIZE];
-            int left = 0, right = SIZE - 1;
-
-            for (int i = 0; i < SIZE; i++) {
-                if (i % 2 == 0) {
-                    result[left++] = sb.charAt(i);
-                } else {
-                    result[right--] = sb.charAt(i);
-                }
-            }
-
-            sb.setLength(0);
-            sb.append(result);
+        while (true) {
+            sb = transform(sb, SIZE);
             cycleLength++;
-        } while (!sb.toString().equals(original));
+
+            if (sb.toString().equals(word)) {
+                break;
+            }
+        }
 
         X %= cycleLength;
 
-        while (X > 0) {
-            char[] result = new char[SIZE];
-            int left = 0, right = SIZE - 1;
-
-            for (int i = 0; i < SIZE; i++) {
-                if (i % 2 == 0) {
-                    result[left++] = sb.charAt(i);
-                } else {
-                    result[right--] = sb.charAt(i);
-                }
-            }
-
-            sb.setLength(0);
-            sb.append(result);
-            X--;
+        for (int i = 0; i < X; i++) {
+            sb = transform(sb, SIZE);
         }
 
         System.out.println(sb);
+    }
+
+    private static StringBuilder transform(StringBuilder sb, int size) {
+        char[] result = new char[size];
+        int left = 0, right = size - 1;
+
+        for (int i = 0; i < size; i++) {
+            if (i % 2 == 0) {
+                result[left++] = sb.charAt(i);
+            } else {
+                result[right--] = sb.charAt(i);
+            }
+        }
+
+        sb.setLength(0);
+        sb.append(result);
+
+        return sb;
     }
 }

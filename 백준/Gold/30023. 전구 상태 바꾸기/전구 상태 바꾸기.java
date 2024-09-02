@@ -3,22 +3,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
+    private static final int INF = Integer.MAX_VALUE;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
         char[] blub = br.readLine().toCharArray();
 
-        int answer = Integer.MAX_VALUE;
-
+        int answer = INF;
         for (int i = 0; i < 3; i++) {
             int cnt = 0;
             char[] newBlub = blub.clone();
 
             for (int j = 1; j < N - 2; j++) {
                 while (newBlub[0] != newBlub[j]) {
+                    shift(newBlub, j);
                     cnt++;
-                    shift(j, newBlub);
                 }
             }
 
@@ -26,21 +27,22 @@ public class Main {
                 answer = Math.min(answer, cnt + i);
             }
 
-            shift(0, blub);
+            shift(blub, 0);
         }
 
-        System.out.println(answer == Integer.MAX_VALUE ? -1 : answer);
+        System.out.println(answer == INF ? -1 : answer);
         br.close();
     }
 
-    private static void shift(int start, char[] newBlub) {
+    private static void shift(char[] newBlub, int start) {
         for (int i = start; i < start + 3; i++) {
-            if (newBlub[i] == 'R') {
-                newBlub[i] = 'G';
-            } else if (newBlub[i] == 'G') {
-                newBlub[i] = 'B';
-            } else {
-                newBlub[i] = 'R';
+            switch (newBlub[i]) {
+                case 'R':
+                    newBlub[i] = 'G';   break;
+                case 'G':
+                    newBlub[i] = 'B';   break;
+                case 'B':
+                    newBlub[i] = 'R';   break;
             }
         }
     }

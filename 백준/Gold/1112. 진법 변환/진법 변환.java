@@ -26,7 +26,6 @@ public class Main {
         }
 
         StringBuilder sb = new StringBuilder();
-
         while (x != 0) {
             int remainder = x % b;
             x /= b;
@@ -35,10 +34,9 @@ public class Main {
                 remainder += Math.abs(b);
                 x += 1;
             }
-
             sb.append(remainder);
         }
-        
+
         if (flag) {
             sb.append('-');
         }

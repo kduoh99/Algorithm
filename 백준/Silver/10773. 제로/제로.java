@@ -14,7 +14,7 @@ public class Main {
             int num = Integer.parseInt(br.readLine());
 
             if (num == 0) {
-                stack.poll();
+                stack.pop();
             } else {
                 stack.push(num);
             }
@@ -22,7 +22,7 @@ public class Main {
 
         int sum = 0;
         while (!stack.isEmpty()) {
-            sum += stack.poll();
+            sum += stack.pop();
         }
 
         System.out.println(sum);

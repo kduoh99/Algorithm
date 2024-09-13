@@ -10,54 +10,55 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        StringTokenizer st;
-
-        StringBuilder sb = new StringBuilder();
         int[] countA = new int[MAX];
         int[] countB = new int[MAX];
-        int[] maxSums = new int[N];
+        StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
+            StringTokenizer st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
             countA[a]++;
             countB[b]++;
-
-            int leftIdx = 1, rightIdx = MAX - 1;
-            int lc = countA[leftIdx], rc = countB[rightIdx];
-
-            while (leftIdx <= MAX - 1 && rightIdx >= 1) {
-                while (leftIdx < MAX - 1 && lc == 0) {
-                    leftIdx++;
-                    lc = countA[leftIdx];
-                }
-
-                while (rightIdx > 1 && rc == 0) {
-                    rightIdx--;
-                    rc = countB[rightIdx];
-                }
-
-                if (rightIdx == 1 && rc == 0) {
-                    break;
-                }
-
-                maxSums[i] = Math.max(maxSums[i], leftIdx + rightIdx);
-
-                if (lc <= rc) {
-                    rc -= lc;
-                    lc = 0;
-                } else {
-                    lc -= rc;
-                    rc = 0;
-                }
-            }
-
-            sb.append(maxSums[i]).append('\n');
+            sb.append(getMaxSum(countA, countB)).append('\n');
         }
 
         System.out.println(sb);
         br.close();
+    }
+
+    private static int getMaxSum(int[] countA, int[] countB) {
+        int left = 1, right = MAX - 1;
+        int lc = countA[left], rc = countB[right];
+        int maxSum = 0;
+
+        while (left <= MAX - 1 && right >= 1) {
+            while (left < MAX - 1 && lc == 0) {
+                left++;
+                lc = countA[left];
+            }
+
+            while (right > 1 && rc == 0) {
+                right--;
+                rc = countB[right];
+            }
+
+            if (right == 1 && rc == 0) {
+                break;
+            }
+
+            maxSum = Math.max(maxSum, left + right);
+
+            if (lc <= rc) {
+                rc -= lc;
+                lc = 0;
+            } else {
+                lc -= rc;
+                rc = 0;
+            }
+        }
+
+        return maxSum;
     }
 }

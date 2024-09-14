@@ -9,7 +9,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        long[] arr = new long[N];
+        int[] arr = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         for (int i = 0; i < N; i++) {
@@ -17,15 +17,20 @@ public class Main {
         }
 
         Arrays.sort(arr);
+        findClosestSum(arr, N);
+        br.close();
+    }
+
+    private static void findClosestSum(int[] arr, int N) {
         long min = Long.MAX_VALUE;
-        long a = 0, b = 0, c = 0;
+        int a = 0, b = 0, c = 0;
 
         for (int i = 0; i < N - 2; i++) {
             int left = i + 1;
             int right = N - 1;
 
             while (left < right) {
-                long sum = arr[i] + arr[left] + arr[right];
+                long sum = (long) arr[i] + arr[left] + arr[right];
 
                 if (min > Math.abs(sum)) {
                     min = Math.abs(sum);
@@ -47,6 +52,5 @@ public class Main {
         }
 
         System.out.println(a + " " + b + " " + c);
-        br.close();
     }
 }

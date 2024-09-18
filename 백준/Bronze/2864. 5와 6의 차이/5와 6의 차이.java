@@ -11,13 +11,10 @@ public class Main {
         String A = st.nextToken();
         String B = st.nextToken();
 
-        int minA = Integer.parseInt(A.replace('6', '5'));
-        int minB = Integer.parseInt(B.replace('6', '5'));
+        int min = Integer.parseInt(A.replace('6', '5')) + Integer.parseInt(B.replace('6', '5'));
+        int max = Integer.parseInt(A.replace('5', '6')) + Integer.parseInt(B.replace('5', '6'));
 
-        int maxA = Integer.parseInt(A.replace('5', '6'));
-        int maxB = Integer.parseInt(B.replace('5', '6'));
-
-        System.out.println(minA + minB + " " + (maxA + maxB));
+        System.out.println(min + " " + max);
         br.close();
     }
 }

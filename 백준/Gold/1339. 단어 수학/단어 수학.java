@@ -20,11 +20,10 @@ public class Main {
         }
 
         Arrays.sort(alpha);
-        int  ans = 0, num = 9, idx = 25;
+        int  ans = 0, num = 9;
 
-        while (alpha[idx] != 0) {
-            ans += alpha[idx] * num--;
-            idx--;
+        for (int i = 25; i >= 0 && alpha[i] > 0; i--) {
+            ans += alpha[i] * num--;
         }
 
         System.out.println(ans);

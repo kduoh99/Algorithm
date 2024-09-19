@@ -10,23 +10,19 @@ public class Main {
 
         StringTokenizer st = new StringTokenizer(br.readLine(), "+-", true);
         int ans = 0;
+        boolean flag = false;
 
         while (st.hasMoreTokens()) {
             String s = st.nextToken();
 
-            if (s.charAt(0) == '-')
-                break;
-            else if (s.charAt(0) == '+')
+            if (s.equals("+")) {
                 continue;
-            ans += Integer.parseInt(s);
-        }
-
-        while (st.hasMoreTokens()) {
-            String s = st.nextToken();
-
-            if (s.charAt(0) == '-' || s.charAt(0) == '+')
-                continue;
-            ans -= Integer.parseInt(s);
+            } else if (s.equals("-")) {
+                flag = true;
+            } else {
+                int num = Integer.parseInt(s);
+                ans += flag ? -num : num;
+            }
         }
 
         System.out.println(ans);

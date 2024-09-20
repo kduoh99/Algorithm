@@ -17,7 +17,7 @@ public class Main {
             int dNum = digit - '0';
             dCount[dNum]++;
             total += dNum;
-            
+
             if (dNum == 0) {
                 flag = true;
             }
@@ -29,7 +29,7 @@ public class Main {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 9; i >= 0; i--) {
+        for (int i = SIZE - 1; i >= 0; i--) {
             while (dCount[i] > 0) {
                 sb.append(i);
                 dCount[i]--;

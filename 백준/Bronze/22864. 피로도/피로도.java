@@ -14,13 +14,13 @@ public class Main {
         int C = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
+        if (A > M) {
+            System.out.println(0);
+            return;
+        }
+        
         int hours = 0, works = 0, fatigue = 0;
         while (hours < 24) {
-            if (A > M) {
-                System.out.println(0);
-                return;
-            }
-
             if (fatigue + A <= M) {
                 fatigue += A;
                 works += B;
@@ -29,7 +29,6 @@ public class Main {
             }
             hours++;
         }
-
 
         System.out.println(works);
         br.close();

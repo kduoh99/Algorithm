@@ -15,19 +15,18 @@ public class Main {
         }
 
         Arrays.sort(A);
-        int i = 0, j = 1, ans = 0;
+        int ans = 0;
 
+        int i = 0, j = 1, k = n - 1;
         while (j < n - 1) {
-            ans = Math.max(ans, Math.abs(A[i] - 2 * A[j] + A[n - 1]));
-            i++;
-            j++;
+            ans = Math.max(ans, Math.abs(A[i] - 2 * A[j] + A[k]));
+            i++; j++;
         }
 
-        i = 1; j = 2;
+        i = 1; j = 2; k = 0;
         while (j < n) {
-            ans = Math.max(ans, Math.abs(A[0] - 2 * A[i] + A[j]));
-            i++;
-            j++;
+            ans = Math.max(ans, Math.abs(A[k] - 2 * A[i] + A[j]));
+            i++; j++;
         }
 
         System.out.println(ans);

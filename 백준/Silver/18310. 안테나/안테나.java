@@ -15,9 +15,9 @@ public class Main {
         for (int i = 0; i < N; i++) {
             A[i] = Integer.parseInt(st.nextToken());
         }
-        
+
         Arrays.sort(A);
-        System.out.println(N % 2 == 0 ? A[N / 2 - 1] : A[N / 2]);
+        System.out.println(A[(N - 1) / 2]);
         br.close();
     }
 }

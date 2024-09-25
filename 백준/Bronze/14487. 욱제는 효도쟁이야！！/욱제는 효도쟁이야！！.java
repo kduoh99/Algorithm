@@ -10,14 +10,14 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int ans = 0, max = 0;
+        int sum = 0, max = 0;
         for (int i = 0; i < n; i++) {
             int num = Integer.parseInt(st.nextToken());
-            ans += num;
+            sum += num;
             max = Math.max(max, num);
         }
 
-        System.out.println(ans - max);
+        System.out.println(sum - max);
         br.close();
     }
 }

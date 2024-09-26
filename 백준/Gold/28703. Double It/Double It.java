@@ -12,25 +12,25 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        int maxVal = Integer.MIN_VALUE;
+        int max = Integer.MIN_VALUE;
 
         while (st.hasMoreTokens()) {
             int val = Integer.parseInt(st.nextToken());
             pq.offer(val);
-            maxVal = Math.max(maxVal, val);
+            max = Math.max(max, val);
         }
 
-        int tmp = maxVal;
-        int minDiff = maxVal - pq.peek();
+        int curMax = max;
+        int minDiff = max - pq.peek();
 
-        while (pq.peek() < maxVal) {
-            int minVal = pq.poll();
-            minDiff = Math.min(minDiff, tmp - minVal);
-            tmp = Math.max(maxVal, minVal * 2);
-            pq.offer(minVal * 2);
+        while (pq.peek() < max) {
+            int min = pq.poll();
+            minDiff = Math.min(minDiff, curMax - min);
+            curMax = Math.max(max, min * 2);
+            pq.offer(min * 2);
         }
 
-        System.out.println(Math.min(minDiff, tmp - pq.peek()));
+        System.out.println(Math.min(minDiff, curMax - pq.peek()));
         br.close();
     }
 }

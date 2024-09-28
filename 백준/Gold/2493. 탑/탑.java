@@ -8,16 +8,16 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        
+
         int N = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
         Deque<int[]> stack = new ArrayDeque<>();
-        
-        for (int i = 0; i < N; i++) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i <= N; i++) {
             int idx = 0;
             int height = Integer.parseInt(st.nextToken());
-            
+
             while (!stack.isEmpty()) {
                 if (stack.peek()[1] > height) {
                     idx = stack.peek()[0];
@@ -26,7 +26,7 @@ public class Main {
                 stack.pop();
             }
             sb.append(idx).append(' ');
-            stack.push(new int[] {i + 1, height});
+            stack.push(new int[] {i, height});
         }
         System.out.println(sb);
         br.close();

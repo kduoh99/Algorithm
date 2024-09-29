@@ -8,7 +8,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        int[] A = new int[N + 1];
+        int[] A = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         for (int i = 0; i < N; i++) {
@@ -17,7 +17,7 @@ public class Main {
 
         int[] stack = {0, 0, 0, 0};
         for (int i = 0; i < N;) {
-            
+
             boolean flag = false;
             for (int j = 0; j < 4; j++) {
                 if (stack[j] < A[i]) {

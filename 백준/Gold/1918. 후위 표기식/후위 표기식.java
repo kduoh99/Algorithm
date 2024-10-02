@@ -5,16 +5,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Main {
-    static int priority(char op) {
-        if (op == '*' || op == '/') {
-            return 2;
-        } else if (op == '+' || op == '-') {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
@@ -31,10 +21,7 @@ public class Main {
                 while (!stack.isEmpty() && stack.peek() != '(') {
                     sb.append(stack.pop());
                 }
-
-                if (!stack.isEmpty()) {
-                    stack.pop();
-                }
+                stack.pop();
             } else {
                 while (!stack.isEmpty() && priority(stack.peek()) >= priority(c)) {
                     sb.append(stack.pop());
@@ -49,5 +36,15 @@ public class Main {
 
         System.out.println(sb);
         br.close();
+    }
+
+    private static int priority(char op) {
+        if (op == '*' || op == '/') {
+            return 2;
+        } else if (op == '+' || op == '-') {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

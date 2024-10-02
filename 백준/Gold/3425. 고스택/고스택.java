@@ -37,7 +37,7 @@ public class Main {
             int N = Integer.parseInt(br.readLine());
             for (int i = 0; i < N; i++) {
                 long value = Long.parseLong(br.readLine());
-                sb.append(!process(value) ? "ERROR" : stack.peek()).append('\n');
+                sb.append(process(value) ? stack.peek() : "ERROR").append('\n');
             }
 
             sb.append('\n');
@@ -55,40 +55,40 @@ public class Main {
             if (cmd.equals("NUM")) {
                 long num = Long.parseLong(commands.get(++i));
                 stack.push(num);
-            } else {
-                if (!checkSize(cmd)) return false;
+                continue;
+            }
 
-                switch (cmd) {
-                    case "POP":
-                        stack.pop();
-                        break;
-                    case "INV":
-                        stack.push(-stack.pop());
-                        break;
-                    case "DUP":
-                        stack.push(stack.peek());
-                        break;
-                    case "SWP":
-                        swap();
-                        break;
-                    case "ADD":
-                        if (!add()) return false;
-                        break;
-                    case "SUB":
-                        if (!sub()) return false;
-                        break;
-                    case "MUL":
-                        if (!mul()) return false;
-                        break;
-                    case "DIV":
-                        if (!div()) return false;
-                        break;
-                    case "MOD":
-                        if (!mod()) return false;
-                        break;
-                    default:
-                        return false;
-                }
+            if (!checkSize(cmd)) return false;
+            switch (cmd) {
+                case "POP":
+                    stack.pop();
+                    break;
+                case "INV":
+                    stack.push(-stack.pop());
+                    break;
+                case "DUP":
+                    stack.push(stack.peek());
+                    break;
+                case "SWP":
+                    swap();
+                    break;
+                case "ADD":
+                    if (!add()) return false;
+                    break;
+                case "SUB":
+                    if (!sub()) return false;
+                    break;
+                case "MUL":
+                    if (!mul()) return false;
+                    break;
+                case "DIV":
+                    if (!div()) return false;
+                    break;
+                case "MOD":
+                    if (!mod()) return false;
+                    break;
+                default:
+                    return false;
             }
         }
 
@@ -135,16 +135,16 @@ public class Main {
     }
 
     private static boolean div() {
+        if (stack.peek() == 0) return false;
         long first = stack.pop();
-        if (first == 0) return false;
         long second = stack.pop();
         stack.push(second / first);
         return true;
     }
 
     private static boolean mod() {
+        if (stack.peek() == 0) return false;
         long first = stack.pop();
-        if (first == 0) return false;
         long second = stack.pop();
         stack.push(second % first);
         return true;

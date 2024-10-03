@@ -15,13 +15,14 @@ public class Main {
             stack.offer(Integer.parseInt(br.readLine()));
         }
 
-        int count = 0, maxHeight = 0;
+        int count = 0, top = 0;
         while (!stack.isEmpty()) {
-            int height = stack.pollLast();
-            if (maxHeight < height) {
+            if (top < stack.peekLast()) {
+                top = stack.pollLast();
                 count++;
-                maxHeight = height;
+                continue;
             }
+            stack.pollLast();
         }
 
         System.out.println(count);

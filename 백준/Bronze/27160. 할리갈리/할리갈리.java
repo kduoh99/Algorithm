@@ -16,7 +16,6 @@ public class Main {
             StringTokenizer st = new StringTokenizer(br.readLine());
             String fruit = st.nextToken();
             int count = Integer.parseInt(st.nextToken());
-
             map.put(fruit, map.getOrDefault(fruit, 0) + count);
         }
 

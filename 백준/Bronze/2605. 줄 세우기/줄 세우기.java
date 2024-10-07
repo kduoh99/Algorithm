@@ -10,13 +10,12 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        int[] orders = new int[N + 1];
         List<Integer> students = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         for (int i = 1; i <= N; i++) {
-            orders[i] = Integer.parseInt(st.nextToken());
-            students.add(i - 1 - orders[i], i);
+            int order = Integer.parseInt(st.nextToken());
+            students.add(i - 1 - order, i);
         }
 
         StringBuilder sb = new StringBuilder();

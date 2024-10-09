@@ -1,41 +1,28 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Deque;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         char[] ch = br.readLine().toCharArray();
-        Deque<Character> stack = new ArrayDeque<>();
+        int countP = 0;
 
-        for (char c : ch) {
-            stack.push(c);
-
-            if (stack.size() >= 4) {
-                char fourth = stack.pop();
-                char third = stack.pop();
-                char second = stack.pop();
-                char first = stack.pop();
-
-                if (first == 'P' && second == 'P' && third == 'A' && fourth == 'P') {
-                    stack.push('P');
+        for (int i = 0; i < ch.length; i++) {
+            if (ch[i] == 'P') {
+                countP++;
+            } else {
+                if (countP >= 2 && i + 1 < ch.length && ch[i + 1] == 'P') {
+                    countP -= 2;
                 } else {
-                    stack.push(first);
-                    stack.push(second);
-                    stack.push(third);
-                    stack.push(fourth);
+                    System.out.println("NP");
+                    return;
                 }
             }
         }
 
-        if (stack.size() == 1 && stack.peek() == 'P') {
-            System.out.println("PPAP");
-        } else {
-            System.out.println("NP");
-        }
+        System.out.println(countP == 1 ? "PPAP" : "NP");
         br.close();
     }
 }

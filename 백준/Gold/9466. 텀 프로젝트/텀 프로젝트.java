@@ -4,9 +4,8 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    private static int[] graph;
-    private static boolean[] visited;
-    private static boolean[] isCycle;
+    private static int[] arr;
+    private static boolean[] visited, finished;
     private static int count;
 
     public static void main(String[] args) throws IOException {
@@ -19,21 +18,20 @@ public class Main {
             int n = Integer.parseInt(br.readLine());
             StringTokenizer st = new StringTokenizer(br.readLine());
 
-            graph = new int[n + 1];
+            arr = new int[n + 1];
             visited = new boolean[n + 1];
-            isCycle = new boolean[n + 1];
+            finished = new boolean[n + 1];
             count = 0;
 
             for (int i = 1; i <= n; i++) {
-                graph[i] = Integer.parseInt(st.nextToken());
+                arr[i] = Integer.parseInt(st.nextToken());
             }
 
             for (int i = 1; i <= n; i++) {
-                if (!isCycle[i]) {
+                if (!visited[i]) {
                     dfs(i);
                 }
             }
-
             sb.append(n - count).append('\n');
         }
 
@@ -43,19 +41,16 @@ public class Main {
 
     private static void dfs(int start) {
         visited[start] = true;
-        int next = graph[start];
+        int next = arr[start];
 
         if (!visited[next]) {
             dfs(next);
-        } else if (!isCycle[next]) {
-            int tmp = next;
+        } else if (!finished[next]) {
             count++;
-            while (tmp != start) {
+            for (int i = next; i != start; i = arr[i]) {
                 count++;
-                tmp = graph[tmp];
             }
         }
-
-        isCycle[start] = true;
+        finished[start] = true;
     }
 }

@@ -8,7 +8,7 @@ public class Main {
     private static final int[] dy = {0, 1, 0, -1};
     private static boolean[][] map;
     private static boolean[][] visited;
-    private static int N, M, count, ans;
+    private static int N, M;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,12 +28,11 @@ public class Main {
             map[--r][--c] = true;
         }
 
+        int ans = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (!visited[i][j] && map[i][j]) {
-                    count = 0;
-                    dfs(i, j);
-                    ans = Math.max(ans, count);
+                    ans = Math.max(ans, dfs(i, j));
                 }
             }
         }
@@ -42,8 +41,8 @@ public class Main {
         br.close();
     }
 
-    private static void dfs(int x, int y) {
-        count++;
+    private static int dfs(int x, int y) {
+        int count = 1;
         visited[x][y] = true;
 
         for (int i = 0; i < 4; i++) {
@@ -52,9 +51,10 @@ public class Main {
 
             if (cx >= 0 && cy >= 0 && cx < N && cy < M) {
                 if (!visited[cx][cy] && map[cx][cy]) {
-                    dfs(cx, cy);
+                    count += dfs(cx, cy);
                 }
             }
         }
+        return count;
     }
 }

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
     private static final long INF = 300_000L * 1_000_000L + 1;
-    private static List<List<int[]>> graph;
+    private static List<List<Node>> graph;
     private static int N;
 
     public static void main(String[] args) throws IOException {
@@ -25,8 +25,8 @@ public class Main {
             int v = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
 
-            graph.get(u).add(new int[]{v, w});
-            graph.get(v).add(new int[]{u, w});
+            graph.get(u).add(new Node(v, w));
+            graph.get(v).add(new Node(u, w));
         }
 
         st = new StringTokenizer(br.readLine());
@@ -40,44 +40,50 @@ public class Main {
         for (int i = 0; i < P; i++)
             Y[i] = Integer.parseInt(st.nextToken());
 
-        long answer = search(X, Z, Y);
-        System.out.println(answer == INF ? -1 : answer);
+        System.out.println(search(X, Z, Y));
         br.close();
     }
 
-    private static long search(int start, int end, int[] Y) {
-        long[] distX = dijkstra(start);
-        long[] distZ = dijkstra(end);
+    private static long search(int X, int Z, int[] Y) {
+        long[] distX = dijkstra(X);
+        long[] distZ = dijkstra(Z);
 
         long answer = INF;
         for (int y : Y) {
             if (distX[y] != INF && distZ[y] != INF)
                 answer = Math.min(answer, distX[y] + distZ[y]);
         }
-
-        return answer;
+        return answer == INF ? -1 : answer;
     }
 
     private static long[] dijkstra(int start) {
         long[] dist = new long[N + 1];
         Arrays.fill(dist, INF);
-        PriorityQueue<long[]> pq = new PriorityQueue<>(Comparator.comparingLong(o -> o[1]));
-        pq.add(new long[]{start, 0});
+        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingLong(o -> o.w));
+        pq.add(new Node(start, 0));
         dist[start] = 0;
 
         while (!pq.isEmpty()) {
-            long[] cur = pq.poll();
+            Node cur = pq.poll();
+            if (cur.w > dist[cur.v]) continue;
 
-            if (cur[1] > dist[(int) cur[0]])
-                continue;
-
-            for (int[] next : graph.get((int) cur[0])) {
-                if (dist[next[0]] > dist[(int) cur[0]] + next[1]) {
-                    dist[next[0]] = dist[(int) cur[0]] + next[1];
-                    pq.add(new long[]{next[0], dist[next[0]]});
+            for (Node next : graph.get(cur.v)) {
+                if (dist[next.v] > dist[cur.v] + next.w) {
+                    dist[next.v] = dist[cur.v] + next.w;
+                    pq.add(new Node(next.v, dist[next.v]));
                 }
             }
         }
         return dist;
+    }
+}
+
+class Node {
+    int v;
+    long w;
+
+    public Node(int v, long w) {
+        this.v = v;
+        this.w = w;
     }
 }

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
     private static final int INF = 100_000 * 10_000 + 1;
-    private static List<List<Node>> graph;
+    private static List<Node>[] graph;
     private static int N;
 
     public static void main(String[] args) throws IOException {
@@ -15,9 +15,9 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        graph = new ArrayList<>();
+        graph = new ArrayList[N + 1];
         for (int i = 0; i <= N; i++)
-            graph.add(new ArrayList<>());
+            graph[i] = new ArrayList<>();
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
@@ -25,7 +25,7 @@ public class Main {
             int v = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
 
-            graph.get(u).add(new Node(v, w));
+            graph[u].add(new Node(v, w));
         }
 
         st = new StringTokenizer(br.readLine());
@@ -60,7 +60,7 @@ public class Main {
             Node cur = pq.poll();
             if (cur.w > dist[cur.v]) continue;
 
-            for (Node next : graph.get(cur.v)) {
+            for (Node next : graph[(cur.v)]) {
                 if (next.v == exc) continue;
                 if (dist[next.v] > dist[cur.v] + next.w) {
                     dist[next.v] = dist[cur.v] + next.w;

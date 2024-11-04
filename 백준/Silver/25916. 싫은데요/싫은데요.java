@@ -17,8 +17,8 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        int start = 0, end = 0, sum = 0, max = 0;
-        while (end < N) {
+        int start = 0, sum = 0, max = 0;
+        for (int end = 0; end < N;) {
             sum += arr[end++];
 
             while (sum > M) {

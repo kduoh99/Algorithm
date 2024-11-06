@@ -16,46 +16,45 @@ public class Main {
         int K = Integer.parseInt(st.nextToken());
 
         st = new StringTokenizer(br.readLine());
-        int[] X = new int[N + 1];
+        long[] X = new long[N + 1];
         for (int i = 1; i <= N; i++) {
             X[i] = X[i - 1] + Integer.parseInt(st.nextToken());
         }
 
         st = new StringTokenizer(br.readLine());
-        boolean[] check = new boolean[N + 1];
+        int[] S = new int[K];
         for (int i = 0; i < K; i++) {
-            int S = Integer.parseInt(st.nextToken());
-            check[S] = true;
+            S[i] = Integer.parseInt(st.nextToken());
         }
 
-        List<int[]> V = new ArrayList<>();
-        int sum = 0;
-        for (int i = N; i >= 1; i--) {
-            sum += X[i];
-            if (check[i]) {
-                V.add(new int[]{sum, i});
-                sum = 0;
-            }
+        List<long[]> V = new ArrayList<>();
+        for (int i = 0; i < K - 1; i++) {
+            long destroy = X[S[i + 1] - 1] - X[S[i] - 1];
+            V.add(new long[]{destroy, S[i]});
         }
+
+        int lastS = S[K - 1];
+        long lastD = X[N] - X[lastS - 1];
+        V.add(new long[]{lastD, lastS});
 
         V.sort((o1, o2) -> {
             if (o1[0] == o2[0]) {
-                return o1[1] - o2[1];
+                return Long.compare(o1[1], o2[1]);
             }
-            return o2[0] - o1[0];
+            return Long.compare(o2[0], o1[0]);
         });
 
-        List<Integer> ans = new ArrayList<>();
+        List<Integer> answer = new ArrayList<>();
         for (int i = 0; i < Math.min(M, V.size()); i++) {
-            ans.add(V.get(i)[1]);
+            answer.add((int) V.get(i)[1]);
         }
 
-        Collections.sort(ans);
+        Collections.sort(answer);
         StringBuilder sb = new StringBuilder();
-        for (int x : ans) {
-            sb.append(x).append("\n");
+        for (int x : answer) {
+            sb.append(x).append('\n');
         }
-        
+
         System.out.println(sb);
         br.close();
     }

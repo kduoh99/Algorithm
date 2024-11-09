@@ -24,7 +24,7 @@ public class Main {
             }
         }
 
-        System.out.println(dp[n][m] % MOD);
+        System.out.println(dp[n][m]);
         br.close();
     }
 }

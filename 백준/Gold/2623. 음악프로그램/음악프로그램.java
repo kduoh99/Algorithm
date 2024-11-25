@@ -7,19 +7,23 @@ import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
+	private static List<Integer>[] graph;
+	private static int[] in;
+	private static int N;
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 
-		List<Integer>[] graph = new ArrayList[N + 1];
+		graph = new ArrayList[N + 1];
 		for (int i = 1; i <= N; i++) {
 			graph[i] = new ArrayList<>();
 		}
 
-		int[] in = new int[N + 1];
+		in = new int[N + 1];
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
 			int K = Integer.parseInt(st.nextToken());
@@ -33,7 +37,11 @@ public class Main {
 			}
 		}
 
-		List<Integer> orders = new ArrayList<>();
+		topologySort();
+		br.close();
+	}
+
+	private static void topologySort() {
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 
 		for (int i = 1; i <= N; i++) {
@@ -41,28 +49,21 @@ public class Main {
 				pq.add(i);
 		}
 
-		while (!pq.isEmpty()) {
-			int current = pq.poll();
-			orders.add(current);
+		StringBuilder sb = new StringBuilder();
+		int count = 0;
 
-			for (int next : graph[current]) {
+		while (!pq.isEmpty()) {
+			int cur = pq.poll();
+			sb.append(cur).append('\n');
+			count++;
+
+			for (int next : graph[cur]) {
 				in[next]--;
 				if (in[next] == 0)
 					pq.add(next);
 			}
 		}
 
-		if (orders.size() != N) {
-			System.out.println(0);
-			return;
-		}
-
-		StringBuilder sb = new StringBuilder();
-		for (int order : orders) {
-			sb.append(order).append('\n');
-		}
-		
-		System.out.println(sb);
-		br.close();
+		System.out.println(count != N ? 0 : sb);
 	}
 }

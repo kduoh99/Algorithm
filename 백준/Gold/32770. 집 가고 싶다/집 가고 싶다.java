@@ -1,66 +1,76 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-	private static final Map<String, List<Node>> graph = new HashMap<>();
+	private static final Map<String, Integer> map = new HashMap<>();
+	private static List<Node>[] graph;
+	private static int vCount = 0;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int E = Integer.parseInt(br.readLine());
+
+		graph = new ArrayList[E * 2];
+		for (int i = 0; i < E * 2; i++) {
+			graph[i] = new ArrayList<>();
+		}
 
 		for (int i = 0; i < E; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			String u = st.nextToken();
 			String v = st.nextToken();
 			long w = Long.parseLong(st.nextToken());
-			graph.computeIfAbsent(u, k -> new ArrayList<>()).add(new Node(v, w));
+
+			int uId = getVertexId(u);
+			int vId = getVertexId(v);
+			graph[uId].add(new Node(vId, w));
 		}
 
-		long toHome = dijkstra("sasa", "home");
-		long toSasa = dijkstra("home", "sasa");
+		int sasaId = getVertexId("sasa");
+		int homeId = getVertexId("home");
+
+		long toHome = dijkstra(sasaId, homeId);
+		long toSasa = dijkstra(homeId, sasaId);
 
 		System.out.println((toHome == Long.MAX_VALUE || toSasa == Long.MAX_VALUE) ? -1 : toHome + toSasa);
 		br.close();
 	}
 
-	static long dijkstra(String start, String end) {
-		Map<String, Long> dist = new HashMap<>();
-		PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingLong(o -> o.w));
+	static int getVertexId(String vertex) {
+		return map.computeIfAbsent(vertex, k -> vCount++);
+	}
 
+	static long dijkstra(int start, int end) {
+		long[] dist = new long[vCount];
+		Arrays.fill(dist, Long.MAX_VALUE);
+		dist[start] = 0;
+
+		PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingLong(o -> o.w));
 		pq.offer(new Node(start, 0));
-		dist.put(start, 0L);
 
 		while (!pq.isEmpty()) {
 			Node cur = pq.poll();
-			if (cur.w > dist.get(cur.v))
-				continue;
+			if (cur.w > dist[cur.v]) continue;
 
-			for (Node next : graph.getOrDefault(cur.v, Collections.emptyList())) {
-				if (dist.getOrDefault(next.v, Long.MAX_VALUE) > cur.w + next.w) {
-					dist.put(next.v, cur.w + next.w);
-					pq.offer(new Node(next.v, cur.w + next.w));
+			for (Node next : graph[cur.v]) {
+				if (dist[next.v] > cur.w + next.w) {
+					dist[next.v] = cur.w + next.w;
+					pq.offer(new Node(next.v, dist[next.v]));
 				}
 			}
 		}
 
-		return dist.getOrDefault(end, Long.MAX_VALUE);
+		return dist[end];
 	}
 }
 
 class Node {
-	String v;
+	int v;
 	long w;
 
-	Node(String v, long w) {
+	Node(int v, long w) {
 		this.v = v;
 		this.w = w;
 	}

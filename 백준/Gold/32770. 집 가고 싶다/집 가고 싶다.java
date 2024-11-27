@@ -5,17 +5,14 @@ import java.util.*;
 
 public class Main {
 	private static final Map<String, Integer> map = new HashMap<>();
-	private static List<Node>[] graph;
+	private static List<List<Node>> graph;
 	private static int vCount = 0;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int E = Integer.parseInt(br.readLine());
 
-		graph = new ArrayList[E * 2];
-		for (int i = 0; i < E * 2; i++) {
-			graph[i] = new ArrayList<>();
-		}
+		int E = Integer.parseInt(br.readLine());
+		graph = new ArrayList<>();
 
 		for (int i = 0; i < E; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
@@ -25,7 +22,7 @@ public class Main {
 
 			int uId = getVertexId(u);
 			int vId = getVertexId(v);
-			graph[uId].add(new Node(vId, w));
+			graph.get(uId).add(new Node(vId, w));
 		}
 
 		int sasaId = getVertexId("sasa");
@@ -38,11 +35,14 @@ public class Main {
 		br.close();
 	}
 
-	static int getVertexId(String vertex) {
-		return map.computeIfAbsent(vertex, k -> vCount++);
+	private static int getVertexId(String vertex) {
+		return map.computeIfAbsent(vertex, k -> {
+			graph.add(new ArrayList<>());
+			return vCount++;
+		});
 	}
 
-	static long dijkstra(int start, int end) {
+	private static long dijkstra(int start, int end) {
 		long[] dist = new long[vCount];
 		Arrays.fill(dist, Long.MAX_VALUE);
 		dist[start] = 0;
@@ -52,9 +52,10 @@ public class Main {
 
 		while (!pq.isEmpty()) {
 			Node cur = pq.poll();
-			if (cur.w > dist[cur.v]) continue;
+			if (cur.w > dist[cur.v])
+				continue;
 
-			for (Node next : graph[cur.v]) {
+			for (Node next : graph.get(cur.v)) {
 				if (dist[next.v] > cur.w + next.w) {
 					dist[next.v] = cur.w + next.w;
 					pq.offer(new Node(next.v, dist[next.v]));

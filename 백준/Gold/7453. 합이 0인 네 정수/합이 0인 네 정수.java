@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+	private static int nn;
+	private static int[] AB, CD;
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -13,8 +16,8 @@ public class Main {
 		int[] B = new int[n];
 		int[] C = new int[n];
 		int[] D = new int[n];
-		StringTokenizer st;
 
+		StringTokenizer st;
 		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
 			A[i] = Integer.parseInt(st.nextToken());
@@ -24,8 +27,9 @@ public class Main {
 		}
 
 		int k = 0;
-		int[] AB = new int[n * n];
-		int[] CD = new int[n * n];
+		nn = n * n;
+		AB = new int[nn];
+		CD = new int[nn];
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
@@ -38,16 +42,21 @@ public class Main {
 		Arrays.sort(AB);
 		Arrays.sort(CD);
 
-		int i = 0, j = n * n - 1;
+		System.out.println(search());
+		br.close();
+	}
+
+	private static long search() {
+		int i = 0, j = nn - 1;
 		long cnt = 0;
 
-		while (i < n * n && j >= 0) {
+		while (i < nn && j >= 0) {
 			int sum = AB[i] + CD[j];
 
 			if (sum == 0) {
 				long cntAB = 1, cntCD = 1;
 
-				while (i + 1 < n * n && AB[i] == AB[i + 1]) {
+				while (i + 1 < nn && AB[i] == AB[i + 1]) {
 					i++;
 					cntAB++;
 				}
@@ -67,7 +76,6 @@ public class Main {
 			}
 		}
 
-		System.out.println(cnt);
-		br.close();
+		return cnt;
 	}
 }

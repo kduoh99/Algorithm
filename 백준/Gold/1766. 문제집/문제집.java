@@ -29,7 +29,6 @@ public class Main {
 			int B = Integer.parseInt(st.nextToken());
 
 			graph[A].add(B);
-			graph[B].add(A);
 			indegree[B]++;
 		}
 

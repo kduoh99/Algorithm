@@ -16,17 +16,16 @@ public class Main {
 	}
 
 	private static long count(long num) {
-		if (num < 2)
-			return num;
+		long count = 0, bit = 1;
 
-		int len = 0;
-		long tmp = num;
-		while (tmp != 0) {
-			len++;
-			tmp >>= 1;
+		while (bit <= num) {
+			long full = num / (bit << 1);
+			long remain = num % (bit << 1);
+
+			count += full * bit + Math.max(0, remain - bit + 1);
+			bit <<= 1;
 		}
 
-		long top = 1L << (len - 1);
-		return (1L << (len - 2)) * (len - 1) + num - top + 1 + count(num - top);
+		return count;
 	}
 }

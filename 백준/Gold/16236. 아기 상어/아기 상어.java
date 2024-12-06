@@ -2,9 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.Comparator;
 import java.util.Deque;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -40,25 +38,22 @@ public class Main {
 
 	private static int bfs(int startX, int startY) {
 		while (true) {
-			PriorityQueue<int[]> pq = new PriorityQueue<>(
-				Comparator.comparingInt((int[] o) -> o[2])
-					.thenComparing(o -> o[0])
-					.thenComparing(o -> o[1])
-			);
-
-			boolean[][] visited = new boolean[N][N];
 			Deque<int[]> q = new ArrayDeque<>();
+			boolean[][] visited = new boolean[N][N];
 			q.offer(new int[] {startX, startY, 0});
 			visited[startX][startY] = true;
-			boolean flag = false;
+
+			int[] target = null;
 
 			while (!q.isEmpty()) {
 				int[] cur = q.poll();
 				int x = cur[0], y = cur[1], dist = cur[2];
 
 				if (arr[x][y] > 0 && arr[x][y] < shark) {
-					pq.offer(new int[] {x, y, dist});
-					flag = true;
+					if (target == null || dist < target[2] ||
+						(dist == target[2] && (x < target[0] || (x == target[0] && y < target[1])))) {
+						target = new int[] {x, y, dist};
+					}
 				}
 
 				for (int k = 0; k < 4; k++) {
@@ -72,9 +67,8 @@ public class Main {
 				}
 			}
 
-			if (!flag) break;
+			if (target == null) break;
 
-			int[] target = pq.poll();
 			startX = target[0];
 			startY = target[1];
 			time += target[2];

@@ -1,8 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -32,28 +32,40 @@ public class Main {
 			}
 		}
 
-		System.out.println(bfs(startX, startY));
+		bfs(startX, startY);
 		br.close();
 	}
 
-	private static int bfs(int startX, int startY) {
+	private static void bfs(int startX, int startY) {
 		while (true) {
-			Deque<int[]> q = new ArrayDeque<>();
+			PriorityQueue<int[]> pq = new PriorityQueue<>(
+				Comparator.comparingInt((int[] o) -> o[2])
+					.thenComparing(o -> o[0])
+					.thenComparing(o -> o[1])
+			);
+
 			boolean[][] visited = new boolean[N][N];
-			q.offer(new int[] {startX, startY, 0});
+			pq.offer(new int[] {startX, startY, 0});
 			visited[startX][startY] = true;
+			boolean flag = false;
 
-			int[] target = null;
-
-			while (!q.isEmpty()) {
-				int[] cur = q.poll();
+			while (!pq.isEmpty()) {
+				int[] cur = pq.poll();
 				int x = cur[0], y = cur[1], dist = cur[2];
 
 				if (arr[x][y] > 0 && arr[x][y] < shark) {
-					if (target == null || dist < target[2] ||
-						(dist == target[2] && (x < target[0] || (x == target[0] && y < target[1])))) {
-						target = new int[] {x, y, dist};
+					arr[x][y] = 0;
+					time += dist;
+					startX = x;
+					startY = y;
+
+					if (++eat == shark) {
+						shark++;
+						eat = 0;
 					}
+
+					flag = true;
+					break;
 				}
 
 				for (int k = 0; k < 4; k++) {
@@ -61,26 +73,15 @@ public class Main {
 					int ny = y + dy[k];
 
 					if (nx >= 0 && nx < N && ny >= 0 && ny < N && !visited[nx][ny] && arr[nx][ny] <= shark) {
-						q.offer(new int[] {nx, ny, dist + 1});
+						pq.offer(new int[] {nx, ny, dist + 1});
 						visited[nx][ny] = true;
 					}
 				}
 			}
 
-			if (target == null) break;
-
-			startX = target[0];
-			startY = target[1];
-			time += target[2];
-			arr[startX][startY] = 0;
-
-			eat++;
-			if (shark == eat) {
-				shark++;
-				eat = 0;
-			}
+			if (!flag) break;
 		}
 
-		return time;
+		System.out.println(time);
 	}
 }

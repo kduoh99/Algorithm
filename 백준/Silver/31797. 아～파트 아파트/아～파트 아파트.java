@@ -17,14 +17,11 @@ public class Main {
 
 		for (int i = 1; i <= M; i++) {
 			st = new StringTokenizer(br.readLine());
-			int h1 = Integer.parseInt(st.nextToken());
-			int h2 = Integer.parseInt(st.nextToken());
-			list.add(new int[] {h1, i});
-			list.add(new int[] {h2, i});
+			list.add(new int[] {Integer.parseInt(st.nextToken()), i});
+			list.add(new int[] {Integer.parseInt(st.nextToken()), i});
 		}
 
 		list.sort(Comparator.comparingInt(o -> o[0]));
-
 		while (N-- > 1) {
 			list.add(list.remove(0));
 		}

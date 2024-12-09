@@ -11,9 +11,9 @@ public class Main {
 
 		StringBuilder sb = new StringBuilder();
 		Deque<Character> q = new ArrayDeque<>();
-		int direction = 0, ball = 0, wall = 0;
+		int dir = 0, ball = 0, wall = 0;
 		int Q = Integer.parseInt(br.readLine());
-		
+
 		for (int i = 0; i < Q; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			String op = st.nextToken();
@@ -24,29 +24,27 @@ public class Main {
 					if (type == 'w') {
 						q.offerLast(type);
 						wall++;
-						break;
-					}
-					if (direction == 1) {
+					} else if (dir == 1) {
 						if (!q.isEmpty() && q.peekFirst() == 'w') {
 							q.offerLast(type);
 							ball++;
 						}
-					} else if (direction == 0 || direction == 2) {
+					} else if (dir == 0 || dir == 2) {
 						q.offerLast(type);
 						ball++;
 					}
 					break;
 				}
 				case "pop": {
-					if (q.isEmpty())
-						break;
-					char removed = q.pollFirst();
-					if (removed == 'w') {
-						wall--;
-					} else {
-						ball--;
+					if (!q.isEmpty()) {
+						if (q.pollFirst() == 'w') {
+							wall--;
+						} else {
+							ball--;
+						}
 					}
-					if (direction == 1) {
+
+					if (dir == 1) {
 						while (!q.isEmpty() && q.peekFirst() == 'b') {
 							q.pollFirst();
 							ball--;
@@ -55,20 +53,15 @@ public class Main {
 					break;
 				}
 				case "rotate": {
-					String dir = st.nextToken();
-					if (dir.equals("l")) {
-						direction = (direction + 3) % 4;
-					} else {
-						direction = (direction + 1) % 4;
-					}
-					if (q.isEmpty())
-						break;
-					if (direction == 1) {
+					String turn = st.nextToken();
+					dir = turn.equals("l") ? (dir + 3) % 4 : (dir + 1) % 4;
+
+					if (dir == 1) {
 						while (!q.isEmpty() && q.peekFirst() == 'b') {
 							q.pollFirst();
 							ball--;
 						}
-					} else if (direction == 3) {
+					} else if (dir == 3) {
 						while (!q.isEmpty() && q.peekLast() == 'b') {
 							q.pollLast();
 							ball--;
@@ -78,11 +71,7 @@ public class Main {
 				}
 				case "count": {
 					char type = st.nextToken().charAt(0);
-					if (type == 'b') {
-						sb.append(ball).append('\n');
-					} else {
-						sb.append(wall).append('\n');
-					}
+					sb.append(type == 'b' ? ball : wall).append('\n');
 					break;
 				}
 			}

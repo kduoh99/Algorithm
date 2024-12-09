@@ -10,7 +10,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		StringBuilder sb = new StringBuilder();
-		Deque<Character> q = new ArrayDeque<>();
+		Deque<String> q = new ArrayDeque<>();
 		int dir = 0, ball = 0, wall = 0;
 		int Q = Integer.parseInt(br.readLine());
 
@@ -20,24 +20,24 @@ public class Main {
 
 			switch (op) {
 				case "push": {
-					char type = st.nextToken().charAt(0);
-					if (type == 'w') {
-						q.offerLast(type);
+					String val = st.nextToken();
+					if (val.equals("w")) {
+						q.offerLast(val);
 						wall++;
 					} else if (dir == 1) {
-						if (!q.isEmpty() && q.peekFirst() == 'w') {
-							q.offerLast(type);
+						if (!q.isEmpty() && q.peekFirst().equals("w")) {
+							q.offerLast(val);
 							ball++;
 						}
 					} else if (dir == 0 || dir == 2) {
-						q.offerLast(type);
+						q.offerLast(val);
 						ball++;
 					}
 					break;
 				}
 				case "pop": {
 					if (!q.isEmpty()) {
-						if (q.pollFirst() == 'w') {
+						if (q.pollFirst().equals("w")) {
 							wall--;
 						} else {
 							ball--;
@@ -45,7 +45,7 @@ public class Main {
 					}
 
 					if (dir == 1) {
-						while (!q.isEmpty() && q.peekFirst() == 'b') {
+						while (!q.isEmpty() && q.peekFirst().equals("b")) {
 							q.pollFirst();
 							ball--;
 						}
@@ -53,16 +53,16 @@ public class Main {
 					break;
 				}
 				case "rotate": {
-					String turn = st.nextToken();
-					dir = turn.equals("l") ? (dir + 3) % 4 : (dir + 1) % 4;
+					String val = st.nextToken();
+					dir = val.equals("l") ? (dir + 3) % 4 : (dir + 1) % 4;
 
 					if (dir == 1) {
-						while (!q.isEmpty() && q.peekFirst() == 'b') {
+						while (!q.isEmpty() && q.peekFirst().equals("b")) {
 							q.pollFirst();
 							ball--;
 						}
 					} else if (dir == 3) {
-						while (!q.isEmpty() && q.peekLast() == 'b') {
+						while (!q.isEmpty() && q.peekLast().equals("b")) {
 							q.pollLast();
 							ball--;
 						}
@@ -70,8 +70,8 @@ public class Main {
 					break;
 				}
 				case "count": {
-					char type = st.nextToken().charAt(0);
-					sb.append(type == 'b' ? ball : wall).append('\n');
+					String val = st.nextToken();
+					sb.append(val.equals("b") ? ball : wall).append('\n');
 					break;
 				}
 			}

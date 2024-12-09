@@ -11,32 +11,31 @@ public class Main {
 		int R = Integer.parseInt(st.nextToken());
 		int C = Integer.parseInt(st.nextToken());
 
-		int up = 1, front = 2, right = 3;
+		int top = 1, front = 2, right = 3;
 		long sum = 1;
 
 		for (int row = 0; row < R; row++) {
 			if (row % 2 == 0) {
-
 				for (int col = 1; col < C; col++) {
-					int tmp = up;
-					up = 7 - right;
+					int tmp = top;
+					top = 7 - right;
 					right = tmp;
-					sum += up;
+					sum += top;
 				}
 			} else {
 				for (int col = C - 2; col >= 0; col--) {
-					int tmp = up;
-					up = right;
+					int tmp = top;
+					top = right;
 					right = 7 - tmp;
-					sum += up;
+					sum += top;
 				}
 			}
 
 			if (row < R - 1) {
-				int tmp = up;
-				up = 7 - front;
+				int tmp = top;
+				top = 7 - front;
 				front = tmp;
-				sum += up;
+				sum += top;
 			}
 		}
 

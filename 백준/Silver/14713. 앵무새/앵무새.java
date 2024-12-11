@@ -8,17 +8,17 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int N = Integer.parseInt(br.readLine());
-		String[][] words = new String[N][];
+		String[][] S = new String[N][];
 		int[] idx = new int[N];
 		StringTokenizer st;
 
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
-			int cnt = st.countTokens();
-			words[i] = new String[cnt];
-			for (int j = 0; j < cnt; j++) {
-				words[i][j] = st.nextToken();
-			}
+			int size = st.countTokens();
+			S[i] = new String[size];
+
+			for (int j = 0; j < size; j++)
+				S[i][j] = st.nextToken();
 		}
 
 		st = new StringTokenizer(br.readLine());
@@ -27,7 +27,7 @@ public class Main {
 			boolean flag = false;
 
 			for (int i = 0; i < N; i++) {
-				if (idx[i] < words[i].length && words[i][idx[i]].equals(L)) {
+				if (idx[i] < S[i].length && S[i][idx[i]].equals(L)) {
 					idx[i]++;
 					flag = true;
 					break;
@@ -41,13 +41,12 @@ public class Main {
 		}
 
 		for (int i = 0; i < N; i++) {
-			if (idx[i] < words[i].length) {
+			if (idx[i] < S[i].length) {
 				System.out.println("Impossible");
 				return;
 			}
 		}
 
 		System.out.println("Possible");
-		br.close();
 	}
 }

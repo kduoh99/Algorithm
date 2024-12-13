@@ -8,22 +8,16 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int N = Integer.parseInt(br.readLine());
-		int[] A = new int[N];
-		int[] B = new int[N];
 		int[] diff = new int[N];
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < N; i++) {
-			A[i] = Integer.parseInt(st.nextToken());
+			diff[i] = Integer.parseInt(st.nextToken());
 		}
 
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < N; i++) {
-			B[i] = Integer.parseInt(st.nextToken());
-		}
-
-		for (int i = 0; i < N; i++) {
-			diff[i] = A[i] - B[i];
+			diff[i] -= Integer.parseInt(st.nextToken());
 		}
 
 		int count = 0;
@@ -34,8 +28,8 @@ public class Main {
 
 			for (int i = 0; i < N; i++) {
 				if (diff[i] == 0) continue;
+				
 				flag = true;
-
 				int v = diff[i];
 
 				for (int j = i + 1; j <= N; j++) {

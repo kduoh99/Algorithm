@@ -11,43 +11,37 @@ public class Main {
 		int[] diff = new int[N];
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < N; i++)
 			diff[i] = Integer.parseInt(st.nextToken());
-		}
 
 		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < N; i++)
 			diff[i] -= Integer.parseInt(st.nextToken());
-		}
 
 		int count = 0;
-		boolean flag = true;
-
-		while (flag) {
-			flag = false;
+		while (true) {
+			boolean flag = false;
 
 			for (int i = 0; i < N; i++) {
 				if (diff[i] == 0) continue;
-				
+
 				flag = true;
-				int v = diff[i];
+				int v = diff[i], j = i;
 
-				for (int j = i + 1; j <= N; j++) {
-					if (j == N || diff[i] * diff[j] <= 0) {
-						count += Math.abs(v);
-
-						for (int k = i; k < j; k++) {
-							diff[k] -= v;
-						}
-						i = j - 1;
-						break;
-					}
-
-					if (Math.abs(diff[j]) < Math.abs(v)) {
+				while (j < N && diff[i] * diff[j] > 0) {
+					if (Math.abs(diff[j]) < Math.abs(v))
 						v = diff[j];
-					}
+					j++;
 				}
+
+				for (int k = i; k < j; k++)
+					diff[k] -= v;
+
+				count += Math.abs(v);
+				i = j - 1;
 			}
+
+			if (!flag) break;
 		}
 
 		System.out.println(count);

@@ -11,17 +11,17 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int N = Integer.parseInt(br.readLine());
-		Deque<Integer> list = new ArrayDeque<>();
+		Deque<Integer> q = new ArrayDeque<>();
 
 		while (N > 4) {
 			N -= 3;
-			list.offer(3);
+			q.offer(3);
 		}
-		list.offer(N);
+		q.offer(N);
 
 		int ans = 1;
-		while (!list.isEmpty()) {
-			ans *= list.poll();
+		while (!q.isEmpty()) {
+			ans *= q.poll();
 			ans %= MOD;
 		}
 

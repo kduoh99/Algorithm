@@ -13,16 +13,11 @@ public class Main {
 
 		while (true) {
 			int v = Integer.parseInt(br.readLine());
-
-			if (v == -1)
-				break;
+			if (v == -1) break;
 
 			if (v == 0) {
 				q.pollFirst();
-				continue;
-			}
-
-			if (q.size() < N) {
+			} else if (q.size() < N) {
 				q.offer(v);
 			}
 		}
@@ -32,7 +27,7 @@ public class Main {
 			sb.append(q.pollFirst()).append(' ');
 		}
 
-		System.out.println(sb.length() == 0 ? "empty" : sb);
+		System.out.println(sb.isEmpty() ? "empty" : sb);
 		br.close();
 	}
 }

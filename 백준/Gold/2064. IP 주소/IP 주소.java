@@ -4,60 +4,56 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    private static final int PARTS = 4;
+	private static final int PARTS = 4;
+	private static int n;
+	private static int[][] ips;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
-        int[][] ipAddr = new int[n][PARTS];
-        StringTokenizer st;
+		n = Integer.parseInt(br.readLine());
+		ips = new int[n][PARTS];
 
-        for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine(), ".");
+		for (int i = 0; i < n; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine(), ".");
 
-            for (int j = 0; j < PARTS; j++) {
-                ipAddr[i][j] = Integer.parseInt(st.nextToken());
-            }
-        }
+			for (int j = 0; j < PARTS; j++) {
+				ips[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
 
-        getNetworkInfo(ipAddr, n);
-        br.close();
-    }
+		calNetInfo();
+		br.close();
+	}
 
-    private static void getNetworkInfo(int[][] ipAddr, int n) {
-        StringBuilder networkAddr = new StringBuilder();
-        StringBuilder networkMask = new StringBuilder();
-        boolean flag = false;
+	private static void calNetInfo() {
+		StringBuilder addr = new StringBuilder();
+		StringBuilder mask = new StringBuilder();
+		boolean flag = false;
 
-        for (int i = 0; i < PARTS; i++) {
-            int min = ipAddr[0][i];
-            int max = ipAddr[0][i];
+		for (int i = 0; i < PARTS; i++) {
+			int min = ips[0][i];
+			int max = ips[0][i];
 
-            for (int j = 1; j < n; j++) {
-                min &= ipAddr[j][i];
-                max |= ipAddr[j][i];
-            }
+			for (int j = 1; j < n; j++) {
+				min &= ips[j][i];
+				max |= ips[j][i];
+			}
 
-            if (!flag) {
-                networkAddr.append(min);
-                networkMask.append(255 - (max - min));
-            } else {
-                networkAddr.append(0);
-                networkMask.append(0);
-            }
+			addr.append(flag ? 0 : min);
+			mask.append(flag ? 0 : (255 - (max - min)));
 
-            if (i < 3) {
-                networkAddr.append('.');
-                networkMask.append('.');
-            }
+			if (i < PARTS - 1) {
+				addr.append('.');
+				mask.append('.');
+			}
 
-            if (min != max) {
-                flag = true;
-            }
-        }
+			if (min != max) {
+				flag = true;
+			}
+		}
 
-        System.out.println(networkAddr);
-        System.out.println(networkMask);
-    }
+		System.out.println(addr);
+		System.out.println(mask);
+	}
 }

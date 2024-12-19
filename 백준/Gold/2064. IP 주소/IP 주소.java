@@ -39,10 +39,15 @@ public class Main {
                 max |= ipAddr[j][i];
             }
 
-            networkAddr.append(flag ? 0 : min);
-            networkMask.append(flag ? 0 : (255 - (max - min)));
+            if (!flag) {
+                networkAddr.append(min);
+                networkMask.append(255 - (max - min));
+            } else {
+                networkAddr.append(0);
+                networkMask.append(0);
+            }
 
-            if (i < PARTS - 1) {
+            if (i < 3) {
                 networkAddr.append('.');
                 networkMask.append('.');
             }

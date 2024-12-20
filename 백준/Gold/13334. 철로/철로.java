@@ -18,13 +18,7 @@ public class Main {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int h = Integer.parseInt(st.nextToken());
 			int o = Integer.parseInt(st.nextToken());
-
-			if (h > o) {
-				int tmp = h;
-				h = o;
-				o = tmp;
-			}
-			list.add(new int[] {h, o});
+			list.add(new int[] {Math.min(h, o), Math.max(h, o)});
 		}
 
 		int d = Integer.parseInt(br.readLine());
@@ -34,12 +28,11 @@ public class Main {
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 
 		for (int[] li : list) {
-			int start = li[0], end = li[1];
-			if (end - start > d)
+			if (li[1] - li[0] > d)
 				continue;
 
-			pq.offer(start);
-			while (!pq.isEmpty() && pq.peek() < end - d) {
+			pq.offer(li[0]);
+			while (!pq.isEmpty() && pq.peek() < li[1] - d) {
 				pq.poll();
 			}
 			count = Math.max(count, pq.size());

@@ -26,9 +26,9 @@ public class Main {
 			disk[i] = 1;
 		}
 
-		for (int i = N; i >= 1; i--) {
-			if (disk[i] == 1) {
-				while (stack1.peek() != i) {
+		do {
+			if (disk[N] == 1) {
+				while (stack1.peek() != N) {
 					int v = stack1.pop();
 					stack2.push(v);
 					disk[v] = 2;
@@ -36,8 +36,8 @@ public class Main {
 				}
 				stack1.pop();
 				move(1, 3);
-			} else if (disk[i] == 2) {
-				while (stack2.peek() != i) {
+			} else if (disk[N] == 2) {
+				while (stack2.peek() != N) {
 					int v = stack2.pop();
 					stack1.push(v);
 					disk[v] = 1;
@@ -46,7 +46,7 @@ public class Main {
 				stack2.pop();
 				move(2, 3);
 			}
-		}
+		} while (N-- > 0);
 
 		System.out.println(K);
 		System.out.println(sb);

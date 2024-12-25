@@ -17,7 +17,7 @@ public class Main {
 			int last = 0, dTop = 0, dBottom = 0, pTop = 0, pBottom = 0;
 			boolean flag = false;
 
-			for (int i = 0; i < N; i++) {
+			while (N-- > 0) {
 				int v = Integer.parseInt(st.nextToken());
 
 				if (dBottom == last + 1) {
@@ -32,9 +32,9 @@ public class Main {
 
 				if (v == last + 1) {
 					last++;
-				} else if (dTop == v - 1) {
+				} else if (v == dTop + 1) {
 					dTop++;
-				} else if (pTop == v - 1) {
+				} else if (v == pTop + 1) {
 					pTop++;
 				} else if (dBottom == 0) {
 					dBottom = dTop = v;

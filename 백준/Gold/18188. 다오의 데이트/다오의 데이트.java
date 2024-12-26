@@ -12,6 +12,7 @@ public class Main {
 
 	private static int H, W, startX, startY;
 	private static char[][] arr;
+	private static boolean flag = false;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -31,9 +32,8 @@ public class Main {
 		}
 
 		searchD();
-		if (!dfs(0, startX, startY, new StringBuilder())) {
-			System.out.println("NO");
-		}
+		dfs(0, startX, startY, new StringBuilder());
+		if (!flag) System.out.println("NO");
 		br.close();
 	}
 
@@ -51,40 +51,40 @@ public class Main {
 
 	private static int getDir(char dir) {
 		switch (dir) {
-			case 'W': return 2;
-			case 'S': return 3;
-			case 'A': return 1;
-			case 'D': return 0;
+			case 'W':
+				return 2;
+			case 'S':
+				return 3;
+			case 'A':
+				return 1;
+			case 'D':
+				return 0;
 		}
 		return -1;
 	}
 
-	private static boolean dfs(int step, int x, int y, StringBuilder sb) {
-		if (step == cmd.size()) {
-			return false;
+	private static void dfs(int step, int x, int y, StringBuilder sb) {
+		if (flag || step == cmd.size()) {
+			return;
 		}
 
-		for (char d : cmd.get(step)) {
-			int dir = getDir(d);
-			int nx = x + dx[dir];
-			int ny = y + dy[dir];
+		for (char dir : cmd.get(step)) {
+			int d = getDir(dir);
+			int nx = x + dx[d];
+			int ny = y + dy[d];
 
 			if (nx >= 0 && nx < H && ny >= 0 && ny < W && arr[nx][ny] != '@') {
-				sb.append(d);
+				sb.append(dir);
 
 				if (arr[nx][ny] == 'Z') {
 					System.out.println("YES\n" + sb);
-					return true;
+					flag = true;
+					return;
 				}
 
-				if (dfs(step + 1, nx, ny, sb)) {
-					return true;
-				}
-
+				dfs(step + 1, nx, ny, sb);
 				sb.deleteCharAt(sb.length() - 1);
 			}
 		}
-
-		return false;
 	}
 }

@@ -51,22 +51,16 @@ public class Main {
 
 	private static int getDir(char dir) {
 		switch (dir) {
-			case 'W':
-				return 2;
-			case 'S':
-				return 3;
-			case 'A':
-				return 1;
-			case 'D':
-				return 0;
+			case 'W': return 2;
+			case 'S': return 3;
+			case 'A': return 1;
+			case 'D': return 0;
 		}
 		return -1;
 	}
 
 	private static void dfs(int step, int x, int y, StringBuilder sb) {
-		if (flag || step == cmd.size()) {
-			return;
-		}
+		if (flag || step == cmd.size()) return;
 
 		for (char dir : cmd.get(step)) {
 			int d = getDir(dir);

@@ -45,7 +45,7 @@ public class Main {
 		br.close();
 	}
 
-	static void dfs(int x, int y) {
+	private static void dfs(int x, int y) {
 		if (x < 0 || x >= M || y < 0 || y >= N || visited[x][y] || !TF[x][y]) return;
 		visited[x][y] = true;
 

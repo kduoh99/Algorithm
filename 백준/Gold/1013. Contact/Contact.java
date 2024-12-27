@@ -3,15 +3,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-	static final String REGEX = "(100+1+|01)+";
+	private static final String REGEX = "(100+1+|01)+";
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		StringBuilder sb = new StringBuilder();
-		
 		int T = Integer.parseInt(br.readLine());
-		
-		for (int i = 0; i < T; i++) {
+
+		while (T-- > 0) {
 			String str = br.readLine();
 			sb.append(str.matches(REGEX) ? "YES" : "NO").append('\n');
 		}

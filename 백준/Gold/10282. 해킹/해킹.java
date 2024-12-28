@@ -4,76 +4,76 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    static int T, n, d, c;
-    static ArrayList<int[]>[] graph;
+	private static int n;
+	private static ArrayList<int[]>[] graph;
 
-    static String Dijkstra(int start) {
-        int[] dist = new int[n + 1];
-        int INF = Integer.MAX_VALUE;
-        Arrays.fill(dist, INF);
-        dist[start] = 0;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
-        pq.offer(new int[]{start, 0});
+		StringBuilder sb = new StringBuilder();
+		int T = Integer.parseInt(br.readLine());
 
-        while (!pq.isEmpty()) {
-            int[] cur = pq.poll();
-            int curIdx = cur[0];
-            int curTime = cur[1];
+		while (T-- > 0) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			n = Integer.parseInt(st.nextToken());
+			int d = Integer.parseInt(st.nextToken());
+			int c = Integer.parseInt(st.nextToken());
 
-            if (curTime > dist[curIdx])
-                continue;
+			graph = new ArrayList[n + 1];
+			for (int i = 0; i <= n; i++)
+				graph[i] = new ArrayList<>();
 
-            for (int[] next : graph[curIdx]) {
-                int nextIdx = next[0];
-                int nextTime = next[1];
+			for (int i = 0; i < d; i++) {
+				st = new StringTokenizer(br.readLine());
 
-                if (dist[nextIdx] > curTime + nextTime) {
-                    dist[nextIdx] = curTime + nextTime;
-                    pq.offer(new int[]{nextIdx, dist[nextIdx]});
-                }
-            }
-        }
+				int a = Integer.parseInt(st.nextToken());
+				int b = Integer.parseInt(st.nextToken());
+				int s = Integer.parseInt(st.nextToken());
 
-        int cnt = 0, maxTime = 0;
-        for (int i = 1; i <= n; i++) {
-            if (dist[i] != INF) {
-                cnt++;
-                maxTime = Math.max(maxTime, dist[i]);
-            }
-        }
-        return cnt + " " + maxTime;
-    }
+				graph[b].add(new int[]{a, s});
+			}
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+			sb.append(dijkstra(c)).append('\n');
+		}
 
-        T = Integer.parseInt(br.readLine());
-        for (int t = 0; t < T; t++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            n = Integer.parseInt(st.nextToken());
-            d = Integer.parseInt(st.nextToken());
-            c = Integer.parseInt(st.nextToken());
+		System.out.println(sb);
+		br.close();
+	}
 
-            graph = new ArrayList[n + 1];
-            for (int i = 0; i <= n; i++)
-                graph[i] = new ArrayList<>();
+	private static String dijkstra(int start) {
+		int[] dist = new int[n + 1];
+		int INF = Integer.MAX_VALUE;
+		Arrays.fill(dist, INF);
+		dist[start] = 0;
 
-            for (int i = 0; i < d; i++) {
-                st = new StringTokenizer(br.readLine());
+		PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+		pq.offer(new int[]{start, 0});
 
-                int a = Integer.parseInt(st.nextToken());
-                int b = Integer.parseInt(st.nextToken());
-                int s = Integer.parseInt(st.nextToken());
+		while (!pq.isEmpty()) {
+			int[] cur = pq.poll();
+			int curIdx = cur[0];
+			int curTime = cur[1];
 
-                graph[b].add(new int[]{a, s});
-            }
+			if (curTime > dist[curIdx]) continue;
 
-            sb.append(Dijkstra(c)).append('\n');
-        }
+			for (int[] next : graph[curIdx]) {
+				int nextIdx = next[0];
+				int nextTime = next[1];
 
-        System.out.println(sb);
-        br.close();
-    }
+				if (dist[nextIdx] > curTime + nextTime) {
+					dist[nextIdx] = curTime + nextTime;
+					pq.offer(new int[]{nextIdx, dist[nextIdx]});
+				}
+			}
+		}
+
+		int cnt = 0, maxTime = 0;
+		for (int i = 1; i <= n; i++) {
+			if (dist[i] != INF) {
+				cnt++;
+				maxTime = Math.max(maxTime, dist[i]);
+			}
+		}
+		return cnt + " " + maxTime;
+	}
 }

@@ -4,16 +4,14 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class Main {
-
 	public static void main(String[] args) throws IOException {
-		var br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
 		String A = br.readLine();
 		String B = br.readLine();
 
 		int A_len = A.length();
 		int B_len = B.length();
-
 		int[][] dp = new int[A_len + 1][B_len + 1];
 
 		for (int i = 1; i <= A_len; i++) {

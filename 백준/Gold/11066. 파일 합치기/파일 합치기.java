@@ -4,17 +4,16 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 
 		int T = Integer.parseInt(br.readLine());
-		for (int t = 0; t < T; t++) {
+		while (T-- > 0) {
 			int K = Integer.parseInt(br.readLine());
 			int[] A = new int[K + 1];
-
 			StringTokenizer st = new StringTokenizer(br.readLine());
+			
 			for (int i = 1; i <= K; i++) {
 				int tmp = Integer.parseInt(st.nextToken());
 				A[i] = A[i - 1] + tmp;

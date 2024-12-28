@@ -4,60 +4,60 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    static ArrayList<Integer>[] graph;
-    static int[] dist;
+	private static ArrayList<Integer>[] graph;
+	private static int[] dist;
 
-    static void bfs(int X) {
-        Queue<Integer> q = new ArrayDeque<>();
-        q.offer(X);
-        dist[X] = 0;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        while (!q.isEmpty()) {
-            int current = q.poll();
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		int K = Integer.parseInt(st.nextToken());
+		int X = Integer.parseInt(st.nextToken());
 
-            for (int next : graph[current]) {
-                if (dist[next] == -1) {
-                    dist[next] = dist[current] + 1;
-                    q.offer(next);
-                }
-            }
-        }
-    }
+		graph = new ArrayList[N + 1];
+		dist = new int[N + 1];
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		for (int i = 1; i <= N; i++) {
+			graph[i] = new ArrayList<>();
+			dist[i] = -1;
+		}
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
-        int X = Integer.parseInt(st.nextToken());
+		for (int i = 0; i < M; i++) {
+			st = new StringTokenizer(br.readLine());
+			int A = Integer.parseInt(st.nextToken());
+			int B = Integer.parseInt(st.nextToken());
+			graph[A].add(B);
+		}
 
-        graph = new ArrayList[N + 1];
-        dist = new int[N + 1];
+		bfs(X);
 
-        for (int i = 1; i <= N; i++) {
-            graph[i] = new ArrayList<>();
-            dist[i] = -1;
-        }
+		StringBuilder sb = new StringBuilder();
+		for (int i = 1; i <= N; i++) {
+			if (dist[i] == K) {
+				sb.append(i).append('\n');
+			}
+		}
 
-        for (int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int A = Integer.parseInt(st.nextToken());
-            int B = Integer.parseInt(st.nextToken());
-            graph[A].add(B);
-        }
+		System.out.println(sb.length() == 0 ? -1 : sb);
+		br.close();
+	}
 
-        bfs(X);
+	private static void bfs(int X) {
+		Deque<Integer> q = new ArrayDeque<>();
+		q.offer(X);
+		dist[X] = 0;
 
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= N; i++) {
-            if (dist[i] == K) {
-                sb.append(i).append('\n');
-            }
-        }
+		while (!q.isEmpty()) {
+			int cur = q.poll();
 
-        System.out.println(sb.length() == 0 ? -1 : sb);
-        br.close();
-    }
+			for (int next : graph[cur]) {
+				if (dist[next] == -1) {
+					dist[next] = dist[cur] + 1;
+					q.offer(next);
+				}
+			}
+		}
+	}
 }

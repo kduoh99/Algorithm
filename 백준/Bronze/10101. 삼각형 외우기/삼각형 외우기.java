@@ -3,14 +3,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		var br = new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int a = Integer.parseInt(br.readLine());
 		int b = Integer.parseInt(br.readLine());
 		int c = Integer.parseInt(br.readLine());
-		
+
 		if (a + b + c == 180) {
 			if (a == b && a == c)
 				System.out.println("Equilateral");
@@ -18,10 +17,8 @@ public class Main {
 				System.out.println("Isosceles");
 			else
 				System.out.println("Scalene");
-		}
-		else {
+		} else {
 			System.out.println("Error");
 		}
-		br.close();
 	}
 }

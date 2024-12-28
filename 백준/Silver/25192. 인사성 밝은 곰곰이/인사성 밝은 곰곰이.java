@@ -5,28 +5,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
-    static Set<String> set;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		Set<String> set = new HashSet<>();
+		int ans = 0;
 
-        int N = Integer.parseInt(br.readLine());
+		for (int i = 0; i < N; i++) {
+			String str = br.readLine();
 
-        set = new HashSet<>();
-        int ans = 0;
+			if (str.equals("ENTER")) {
+				ans += set.size();
+				set = new HashSet<>();
+			} else {
+				set.add(str);
+			}
+		}
 
-        for (int i = 0; i < N; i++) {
-            String str = br.readLine();
-
-            if (str.equals("ENTER")) {
-                ans += set.size();
-                set = new HashSet<>();
-            } else {
-                set.add(str);
-            }
-        }
-
-        System.out.println(ans + set.size());
-        br.close();
-    }
+		System.out.println(ans + set.size());
+		br.close();
+	}
 }

@@ -26,7 +26,7 @@ public class Main {
 			if (lis.get(lis.size() - 1) < A[i]) {
 				lis.add(A[i]);
 			} else {
-				update(A[i]);
+				binarySearch(A[i]);
 			}
 		}
 
@@ -34,7 +34,7 @@ public class Main {
 		br.close();
 	}
 
-	private static void update(int val) {
+	private static void binarySearch(int val) {
 		int low = 0, high = lis.size() - 1;
 
 		while (low < high) {

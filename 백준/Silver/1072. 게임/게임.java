@@ -4,20 +4,27 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+	private static long X, Y;
+	private static int per;
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		long X = Long.parseLong(st.nextToken());
-		long Y = Long.parseLong(st.nextToken());
+		X = Long.parseLong(st.nextToken());
+		Y = Long.parseLong(st.nextToken());
 
-		int per = (int) (Y * 100 / X);
+		per = (int) (Y * 100 / X);
 		if (per >= 99) {
 			System.out.println(-1);
 			return;
 		}
 
-		int left = 0, right = 1_000_000_000;
+		System.out.println(binarySearch(0, 1_000_000_000));
+		br.close();
+	}
+
+	private static int binarySearch(int left, int right) {
 		while (left < right) {
 			int mid = (left + right) / 2;
 			int Z = (int) ((Y + mid) * 100 / (X + mid));
@@ -29,7 +36,6 @@ public class Main {
 			}
 		}
 
-		System.out.println(left);
-		br.close();
+		return left;
 	}
 }

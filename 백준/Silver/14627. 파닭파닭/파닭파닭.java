@@ -4,41 +4,46 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static int C;
+	private static int[] arr;
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int S = Integer.parseInt(st.nextToken());
-        int C = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int[] arr = new int[S];
-        long total = 0L;
-        int max = 0;
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int S = Integer.parseInt(st.nextToken());
+		C = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < S; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
-            total += arr[i];
-            max = Math.max(max, arr[i]);
-        }
+		arr = new int[S];
+		long total = 0L;
+		int max = 0;
 
-        int left = 1, right = max, best = 0;
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            int count = 0;
+		for (int i = 0; i < S; i++) {
+			arr[i] = Integer.parseInt(br.readLine());
+			total += arr[i];
+			max = Math.max(max, arr[i]);
+		}
 
-            for (int a : arr) {
-                count += a / mid;
-            }
+		System.out.println(total - (long) binarySearch(1, max) * C);
+		br.close();
+	}
 
-            if (count >= C) {
-                best = mid;
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
+	private static int binarySearch(int left, int right) {
+		while (left <= right) {
+			int mid = (left + right) / 2;
+			int count = 0;
 
-        System.out.println(total - (long) best * C);
-        br.close();
-    }
+			for (int a : arr) {
+				count += a / mid;
+			}
+
+			if (count >= C) {
+				left = mid + 1;
+			} else {
+				right = mid - 1;
+			}
+		}
+
+		return right;
+	}
 }

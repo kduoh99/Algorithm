@@ -35,18 +35,18 @@ public class Main {
 	}
 
 	private static void binarySearch(int val) {
-		int low = 0, high = lis.size() - 1;
+		int left = 0, right = lis.size() - 1;
 
-		while (low < high) {
-			int mid = (low + high) / 2;
+		while (left < right) {
+			int mid = (left + right) / 2;
 
 			if (lis.get(mid) < val) {
-				low = mid + 1;
+				left = mid + 1;
 			} else {
-				high = mid;
+				right = mid;
 			}
 		}
 
-		lis.set(high, val);
+		lis.set(right, val);
 	}
 }

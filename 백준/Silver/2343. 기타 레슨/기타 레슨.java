@@ -4,14 +4,17 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+	private static int M;
+	private static int[] A;
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
 
-		int[] A = new int[N];
+		A = new int[N];
 		st = new StringTokenizer(br.readLine());
 
 		int maxL = 0, totalL = 0;
@@ -22,25 +25,26 @@ public class Main {
 			totalL += A[i];
 		}
 
-		int left = maxL, right = totalL, result = 0;
+		System.out.println(binarySearch(maxL, totalL));
+		br.close();
+	}
 
+	private static int binarySearch(int left, int right) {
 		while (left <= right) {
 			int mid = (left + right) / 2;
 			int cnt = find(A, mid);
 
 			if (cnt <= M) {
-				result = mid;
 				right = mid - 1;
 			} else {
 				left = mid + 1;
 			}
 		}
 
-		System.out.println(result);
-		br.close();
+		return left;
 	}
 
-	static int find(int[] A, int M) {
+	private static int find(int[] A, int M) {
 		int cnt = 1, sum = 0;
 
 		for (int lesson : A) {
@@ -51,6 +55,7 @@ public class Main {
 				sum = lesson;
 			}
 		}
+		
 		return cnt;
 	}
 }

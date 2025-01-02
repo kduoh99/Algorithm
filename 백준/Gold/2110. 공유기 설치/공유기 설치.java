@@ -15,26 +15,27 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		X = new int[N];
-		
+
 		for (int i = 0; i < N; i++)
 			X[i] = Integer.parseInt(br.readLine());
 
 		Arrays.sort(X);
-		int left = 1, right = X[N - 1] - X[0], result = 0;
+		System.out.println(binarySearch(1, X[N - 1] - X[0]));
+		br.close();
+	}
 
+	private static int binarySearch(int left, int right) {
 		while (left <= right) {
 			int mid = (left + right) / 2;
 
 			if (routers(mid)) {
-				result = mid;
 				left = mid + 1;
 			} else {
 				right = mid - 1;
 			}
 		}
 
-		System.out.println(result);
-		br.close();
+		return right;
 	}
 
 	private static boolean routers(int dist) {

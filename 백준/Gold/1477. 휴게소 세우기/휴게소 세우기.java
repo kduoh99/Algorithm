@@ -31,7 +31,7 @@ public class Main {
 		}
 
 		Collections.sort(list);
-		System.out.println(binarySearch(1, L));
+		System.out.println(binarySearch(1, L - 1));
 		br.close();
 	}
 
@@ -41,8 +41,7 @@ public class Main {
 			int cnt = 0;
 
 			for (int i = 1; i < list.size(); i++) {
-				int dist = list.get(i) - list.get(i - 1);
-				cnt += (dist - 1) / mid;
+				cnt += (list.get(i) - list.get(i - 1) - 1) / mid;
 			}
 
 			if (cnt > M) {

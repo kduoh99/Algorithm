@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Solution {
-    public int[] solution(int []arr) {
+    public Deque<Integer> solution(int []arr) {
         Deque<Integer> q = new ArrayDeque<>();
         
         for (int a : arr) {
@@ -14,14 +14,6 @@ public class Solution {
             }
         }
         
-        List<Integer> list = new ArrayList<>();
-        
-        while (!q.isEmpty()) {
-            list.add(q.pollFirst());
-        }
-        
-        return list.stream()
-			.mapToInt(Integer::intValue)
-            .toArray();
+        return q;
     }
 }

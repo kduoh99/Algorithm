@@ -1,19 +1,15 @@
 import java.util.*;
 
 public class Solution {
-    public Deque<Integer> solution(int []arr) {
-        Deque<Integer> q = new ArrayDeque<>();
+    public Stack<Integer> solution(int []arr) {
+        Stack<Integer> stack = new Stack<>();
         
         for (int a : arr) {
-            if (!q.isEmpty()) {
-                if (q.peekLast() != a) {
-                    q.offer(a);
-                }
-            } else {
-                q.offer(a);
+            if (stack.isEmpty() || stack.peek() != a) {
+                stack.push(a);
             }
         }
         
-        return q;
+        return stack;
     }
 }

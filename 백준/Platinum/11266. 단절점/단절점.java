@@ -40,8 +40,8 @@ public class Main {
 			}
 		}
 
-		StringBuilder sb = new StringBuilder();
 		int cnt = 0;
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 1; i <= V; i++) {
 			if (isCutV[i]) {
@@ -50,8 +50,7 @@ public class Main {
 			}
 		}
 
-		sb.insert(0, cnt + "\n");
-		System.out.println(sb);
+		System.out.println(cnt + "\n" + sb);
 		br.close();
 	}
 

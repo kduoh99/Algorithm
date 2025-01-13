@@ -1,39 +1,33 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 public class Main {
-	private static final int SIZE = 27;
-	private static final int INF = 1000;
-	private static int[][] dist;
+	private static final int SIZE = 26;
+	private static boolean[][] dist;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		dist = new int[SIZE][SIZE];
-		for (int i = 1; i < SIZE; i++) {
-			Arrays.fill(dist[i], INF);
-			dist[i][i] = 0;
-		}
-
+		dist = new boolean[SIZE][SIZE];
 		int n = Integer.parseInt(br.readLine());
+
 		while (n-- > 0) {
 			String[] str = br.readLine().split(" ");
-			int from = str[0].charAt(0) - 'a' + 1;
-			int to = str[2].charAt(0) - 'a' + 1;
-			dist[from][to] = 1;
+			int from = str[0].charAt(0) - 'a';
+			int to = str[2].charAt(0) - 'a';
+			dist[from][to] = true;
 		}
 
 		floyd();
 		StringBuilder sb = new StringBuilder();
 		int m = Integer.parseInt(br.readLine());
-		
+
 		while (m-- > 0) {
 			String[] str = br.readLine().split(" ");
-			int from = str[0].charAt(0) - 'a' + 1;
-			int to = str[2].charAt(0) - 'a' + 1;
-			sb.append(dist[from][to] == INF ? "F" : "T").append('\n');
+			int from = str[0].charAt(0) - 'a';
+			int to = str[2].charAt(0) - 'a';
+			sb.append(dist[from][to] ? "T" : "F").append('\n');
 		}
 
 		System.out.println(sb);
@@ -41,10 +35,12 @@ public class Main {
 	}
 
 	private static void floyd() {
-		for (int k = 1; k < SIZE; k++) {
-			for (int i = 1; i < SIZE; i++) {
-				for (int j = 1; j < SIZE; j++) {
-					dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+		for (int k = 0; k < SIZE; k++) {
+			for (int i = 0; i < SIZE; i++) {
+				for (int j = 0; j < SIZE; j++) {
+					if (dist[i][k] && dist[k][j]) {
+						dist[i][j] = true;
+					}
 				}
 			}
  		}

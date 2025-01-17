@@ -16,9 +16,8 @@ public class Main {
 		}
 
 		Arrays.sort(balls, Comparator.comparingInt(o -> o.size));
-		long[] colorSum = new long[N + 1];
-		long totalSum = 0L;
-		int idx = 0;
+		int[] colorSum = new int[N + 1];
+		int totalSum = 0, idx = 0;
 
 		for (int i = 0; i < N; i++) {
 			while (idx < N && balls[idx].size < balls[i].size) {
@@ -42,8 +41,7 @@ public class Main {
 }
 
 class Ball {
-	int idx, color, size;
-	long sum;
+	int idx, color, size, sum;
 
 	public Ball(int idx, int color, int size) {
 		this.idx = idx;

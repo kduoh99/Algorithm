@@ -23,16 +23,16 @@ public class Main {
 			if (check[belt[i]]++ == 0)
 				count++;
 		}
-		answer = check[c] == 0 ? count + 1 : count;
+		answer = count + (check[c] == 0 ? 1 : 0);
 
 		for (int i = 0; i < N; i++) {
 			if (--check[belt[i]] == 0)
 				count--;
-			
+
 			if (check[belt[(i + k) % N]]++ == 0)
 				count++;
 
-			answer = Math.max(answer, check[c] == 0 ? count + 1 : count);
+			answer = Math.max(answer, count + (check[c] == 0 ? 1 : 0));
 		}
 
 		System.out.println(answer);

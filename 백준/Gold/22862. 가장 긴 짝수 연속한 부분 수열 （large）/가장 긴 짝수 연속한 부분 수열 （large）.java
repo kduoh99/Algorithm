@@ -19,18 +19,17 @@ public class Main {
 		int left = 0, right = 0, count = 0, answer = 0;
 
 		while (right < N) {
-			if (S[right] % 2 == 0) {
-				right++;
-			} else if (count < K) {
+			if (S[right] % 2 != 0)
 				count++;
-				right++;
-			} else {
-				if (S[left] % 2 != 0) {
+
+			while (count > K) {
+				if (S[left] % 2 != 0)
 					count--;
-				}
 				left++;
 			}
-			answer = Math.max(answer, right - left - count);
+
+			answer = Math.max(answer, right - left + 1 - count);
+			right++;
 		}
 
 		System.out.println(answer);

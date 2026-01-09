@@ -1,30 +1,30 @@
 class Solution {
     public String longestPalindrome(String s) {
-        String longest = "";
-        int len = s.length();
+        char[] ch = s.toCharArray();
+        String answer = String.valueOf(ch[0]);
         
-        for (int i = len; i >= 1; i--) {
-            for (int j = 0; j <= len - i; j++) {
-                int start = j;
-                int end = j + i - 1;
+        for (int i = 2; i <= ch.length; i++) {
+            for (int j = 0; j <= ch.length - i; j++) {
+                int left = j;
+                int right = j + i - 1;
                 boolean flag = true;
-                
-                while (start < end) {
-                    if (s.charAt(start) != s.charAt(end)) {
+
+                while (left < right) {
+                    if (ch[left] != ch[right]) {
                         flag = false;
                         break;
                     }
-                    start++;
-                    end--;
+                    left++;
+                    right--;
                 }
-                
-                // 회문이고, 지금까지 찾은 가장 긴 회문보다 길다면 갱신
-                if (flag && i > longest.length()) {
-                    longest = s.substring(j, j + i);
+
+                if (flag) {
+                    answer = s.substring(j, j + i);
+                    break;
                 }
             }
         }
         
-        return longest;
+        return answer;
     }
 }

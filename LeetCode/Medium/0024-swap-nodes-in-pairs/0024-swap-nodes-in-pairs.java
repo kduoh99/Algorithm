@@ -14,25 +14,15 @@ class Solution {
         ListNode curr = node;
 
         while (head != null) {
-            boolean flag = false;
-            int a = head.val;
-            int b = 0;
-            head = head.next;
-
-            if (head != null) {
-                b = head.val;
-                head = head.next;
-                flag = true;
-            }
-
-            if (flag) {
-                curr.next = new ListNode(b);
-                curr = curr.next;
-                curr.next = new ListNode(a);
-                curr = curr.next;
+            if (head.next != null) {
+                curr.next = new ListNode(head.next.val);
+                curr.next.next = new ListNode(head.val);
+                curr = curr.next.next;
+                head = head.next.next;
             } else {
-                curr.next = new ListNode(a);
+                curr.next = new ListNode(head.val);
                 curr = curr.next;
+                head = head.next;
             }
         }
 

@@ -10,33 +10,23 @@
  */
 class Solution {
     public ListNode oddEvenList(ListNode head) {
-        Deque<Integer> d1 = new ArrayDeque<>();
-        Deque<Integer> d2 = new ArrayDeque<>();
-        int count = 0;
+        if (head == null) {
+            return null;
+        }
+        
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenHead = even;
 
-        while (head != null) {
-            if (count % 2 == 0) {
-                d1.offer(head.val);
-            } else {
-                d2.offer(head.val);
-            }
-            count++;
-            head = head.next;
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+
+            even.next = odd.next;
+            even = even.next;
         }
 
-        ListNode node = new ListNode();
-        ListNode curr = node;
-
-        while (!d1.isEmpty()) {
-            curr.next = new ListNode(d1.poll());
-            curr = curr.next;
-        }
-
-        while (!d2.isEmpty()) {
-            curr.next = new ListNode(d2.poll());
-            curr = curr.next;
-        }
-
-        return node.next;
+        odd.next = evenHead;
+        return head;
     }
 }

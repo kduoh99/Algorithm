@@ -1,10 +1,10 @@
 # [level 3] 여행경로 - 43164 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43164?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43164?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 81.6 MB, 시간: 1.20 ms
+메모리: 62.4 MB, 시간: 9.22 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2026년 02월 12일 11:08:19
+2026년 02월 12일 11:17:46
 
 ### 문제 설명
 
